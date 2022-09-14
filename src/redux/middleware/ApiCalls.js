@@ -33,3 +33,5 @@ const promiseMiddleware = () => {
       });
   };
 };
+
+export default promiseMiddleware;

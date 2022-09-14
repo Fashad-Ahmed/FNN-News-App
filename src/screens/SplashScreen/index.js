@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import React from 'react';
 import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -15,7 +15,16 @@ const SplashScreen = () => {
   const renderSplash = () => {
     return (
       <View>
-        <View></View>
+        <View>
+          <Image
+            source={require('@Asset/splash_icon_dark.png')}
+            style={{
+              width: 150,
+              height: 150,
+              resizeMode: 'contain',
+            }}
+          />
+        </View>
       </View>
     );
   };
@@ -26,11 +35,7 @@ const SplashScreen = () => {
       navigation.navigate('Onboarding');
     }, 1000);
   }, []);
-  return (
-    <View>
-      <Text>SplashScreen</Text>
-    </View>
-  );
+  return <View>{isVisible === true ? renderSplash() : null}</View>;
 };
 
 export default SplashScreen;

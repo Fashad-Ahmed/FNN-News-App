@@ -4,11 +4,13 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/index';
 import promiseMiddleware from './middleware/ApiCalls';
 
-let middleware = [thunk, promiseMiddleware];
+const middleware = [promiseMiddleware, thunk];
+// const middleware = [thunk];
 
-const reduxStore = createStore(
-  rootReducer,
-  compose(applyMiddleware(...middleware)),
-);
+// const middlewareEnhancer = applyMiddleware(...middleware);
+// const composedEnhancers = compose(...middlewareEnhancer);
 
+const reduxStore = createStore(rootReducer, applyMiddleware(...middleware));
+
+// const reduxStore = createStore(rootReducer, [thunk]);
 export default reduxStore;

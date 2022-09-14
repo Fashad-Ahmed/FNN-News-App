@@ -4,7 +4,16 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import Ion from 'react-native-vector-icons/dist/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
-const Onboarding = () => {
+import Constant from '../../constants/index';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+// import {styles} from './styles';
+const {
+  THEME: {primary, secondary},
+} = Constant;
+
+const Onboarding = ({...props}) => {
+  console.log('styles', styles);
   const navigation = useNavigation();
   const slides = [
     {
@@ -29,9 +38,9 @@ const Onboarding = () => {
 
   const _renderItem = ({item}) => {
     return (
-      <View>
-        <View>
-          <Text>{item.title}</Text>
+      <View style={styles.slide}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{item.title}</Text>
         </View>
         <View>
           <Image source={item.image} />
@@ -45,8 +54,7 @@ const Onboarding = () => {
 
   const _renderNextButton = () => {
     return (
-      <View>
-        {/* style={styles().buttonCircle} */}
+      <View style={styles.buttonCircle}>
         <Ion
           name="arrow-forward-outline"
           color="rgba(255,255,255, .9 )"
@@ -58,8 +66,7 @@ const Onboarding = () => {
 
   const _renderDoneButton = () => {
     return (
-      <View>
-        {/* style={styles().buttonCircle} */}
+      <View style={styles.buttonCircle}>
         <Ion name="md-checkmark" color="rgba(255,255,255, .9 )" size={24} />
       </View>
     );
@@ -67,10 +74,8 @@ const Onboarding = () => {
 
   const _renderSkipButton = () => {
     return (
-      <View>
-        {/* style={styles().skipView} */}
-        <Text>Skip</Text>
-        {/* style={styles().skipTextColor} */}
+      <View style={styles.skipView}>
+        <Text style={styles.skipTextColor}>Skip</Text>
       </View>
     );
   };
@@ -92,5 +97,65 @@ const Onboarding = () => {
     />
   );
 };
+
+const styles = EStyleSheet.create({
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  titleContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingStart: '8%',
+    paddingRight: '8%',
+  },
+  title: {
+    color: secondary,
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  imageContainer: {
+    flex: 3,
+    justifyContent: 'center',
+  },
+  image: {
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    paddingStart: '8%',
+    paddingRight: '8%',
+  },
+
+  text: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  buttonCircle: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'rgba(0, 0, 0, .2)',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  skipTextColor: {
+    color: primary,
+    fontWeight: 'bold',
+  },
+  skipView: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default Onboarding;
