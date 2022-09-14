@@ -1,10 +1,15 @@
 import {createStore} from 'redux';
-import {persistStore, persistReducer} from 'redux-persist';
+import {
+  persistStore,
+  persistReducer,
+  persistCombineReducers,
+} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Constants from '../constants';
+import Constant from '../../constants/index';
+import authReducer from './authReducers';
 
 const persistConfig = {
-  key: Constants.asyncStorageKey,
+  key: Constant.asyncStorageKey,
   storage: AsyncStorage,
   blacklist: [],
 };

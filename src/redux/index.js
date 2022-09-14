@@ -1,7 +1,7 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
-import rootReducer from '@Reducer';
+import rootReducer from './reducers/index';
 import promiseMiddleware from './middleware/ApiCalls';
 
 let middleware = [thunk, promiseMiddleware];

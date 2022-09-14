@@ -1,3 +1,3 @@
-export default {
-  asyncStorageKey: 'NewsApp001',
-};
+export const UPDATE_ONBOARDING_STATUS = 'UPDATE_ONBOARDING_STATUS';
+export const UPDATE_USER_LOGIN = 'UPDATE_USER_LOGIN';
+export const UPDATE_USER_ACCESS_TOKEN = 'UPDATE_USER_ACCESS_TOKEN';
