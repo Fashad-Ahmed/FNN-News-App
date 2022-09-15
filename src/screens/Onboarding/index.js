@@ -2,10 +2,12 @@ import {View, Text, Image} from 'react-native';
 import React from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Ion from 'react-native-vector-icons/dist/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 
+import * as authAction from '../../redux/actions/authActions';
 import Constant from '../../constants/index';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {connect} from 'react-redux';
 
 // import {styles} from './styles';
 const {
@@ -13,8 +15,16 @@ const {
 } = Constant;
 
 const Onboarding = ({...props}) => {
+  console.log(props);
   console.log('styles', styles);
+
+  const {updateOnboarding} = props;
+
   const navigation = useNavigation();
+  const theme = useTheme();
+
+  const {background, dark} = theme;
+  console.log(theme);
   const slides = [
     {
       key: 'slide1',
@@ -81,6 +91,7 @@ const Onboarding = ({...props}) => {
   };
 
   const _onEndReached = () => {
+    updateOnboarding(false);
     navigation.navigate('Login');
   };
   return (
@@ -98,64 +109,76 @@ const Onboarding = ({...props}) => {
   );
 };
 
-const styles = EStyleSheet.create({
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
-  titleContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    paddingStart: '8%',
-    paddingRight: '8%',
-  },
-  title: {
-    color: secondary,
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  imageContainer: {
-    flex: 3,
-    justifyContent: 'center',
-  },
-  image: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    paddingStart: '8%',
-    paddingRight: '8%',
-  },
+const styles = () => {
+  EStyleSheet.create({
+    slide: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#ffffff',
+    },
+    titleContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      paddingStart: '8%',
+      paddingRight: '8%',
+    },
+    title: {
+      color: secondary,
+      fontSize: 25,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    imageContainer: {
+      flex: 3,
+      justifyContent: 'center',
+    },
+    image: {
+      width: 300,
+      height: 300,
+      resizeMode: 'contain',
+    },
+    textContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      paddingStart: '8%',
+      paddingRight: '8%',
+    },
 
-  text: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  buttonCircle: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'rgba(0, 0, 0, .2)',
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  skipTextColor: {
-    color: primary,
-    fontWeight: 'bold',
-  },
-  skipView: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+    text: {
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    buttonCircle: {
+      width: 40,
+      height: 40,
+      backgroundColor: 'rgba(0, 0, 0, .2)',
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    skipTextColor: {
+      color: primary,
+      fontWeight: 'bold',
+    },
+    skipView: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+};
 
-export default Onboarding;
+const mapStateToProps = state => {
+  return {
+    isOnboardingDisabled: state.auth.isOnboardingDisabled,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  updateOnboarding: status => dispatch(authAction.updateOnboarding(state));
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Onboarding);

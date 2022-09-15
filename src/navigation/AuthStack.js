@@ -14,14 +14,15 @@ import PropTypes from 'prop-types';
 
 const Stack = createStackNavigator();
 
-const AuthStack = () => {
+const AuthStack = ({...props}) => {
+  const {isOnboardingDisabled} = props;
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
       initialRouteName="Splash"
-      // initialRouteName={isOnboardingDisabled ? 'Splash' : 'Onboarding' }
+      // initialRouteName={isOnboardingDisabled ? 'Splash' : 'Onboarding'}
     >
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Home" component={Tabs} />
@@ -35,4 +36,10 @@ const AuthStack = () => {
   );
 };
 
-export default AuthStack;
+const mapStateToProps = state => {
+  return {
+    isOnboardingDisabled: state.auth.isOnboardingDisabled,
+  };
+};
+
+export default connect(mapStateToProps)(AuthStack);
